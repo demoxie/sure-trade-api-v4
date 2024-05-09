@@ -1,4 +1,5 @@
 import {
+  BelongsTo,
   Column,
   DataType,
   ForeignKey,
@@ -24,6 +25,9 @@ export class GiftCard extends Model<GiftCard> {
     allowNull: false,
   })
   userId: number;
+
+  @BelongsTo(() => User)
+  user: User;
 
   @Column({
     type: DataType.STRING,
@@ -84,7 +88,7 @@ export class GiftCard extends Model<GiftCard> {
   expiryDate: Date;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.DATE,
     allowNull: true,
   })
   status: string;

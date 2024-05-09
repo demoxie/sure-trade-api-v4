@@ -1,7 +1,11 @@
 import { Module } from "@nestjs/common";
-import { CodeGenerator } from "./code-generator.util";
+import { UtilService } from "./util.service";
+import { JwtModule } from "@nestjs/jwt";
+import { ModelMapperService } from "./modelmapper/modelmapper.service";
 
 @Module({
-  providers: [CodeGenerator],
+  imports: [JwtModule],
+  providers: [UtilService, ModelMapperService],
+  exports: [UtilService],
 })
 export class UtilModule {}

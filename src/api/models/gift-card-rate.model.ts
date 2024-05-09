@@ -1,4 +1,5 @@
 import {
+  BelongsTo,
   Column,
   DataType,
   ForeignKey,
@@ -6,6 +7,8 @@ import {
   Table,
 } from "sequelize-typescript";
 import { User } from "./user.model";
+import { BankDetails } from "./bank-details";
+import { Wallet } from "./wallet.model";
 
 @Table
 export class GiftCardRate extends Model<GiftCardRate> {
@@ -57,12 +60,13 @@ export class GiftCardRate extends Model<GiftCardRate> {
     type: DataType.STRING,
   })
   paymentMethod: string;
-
+  @ForeignKey(() => BankDetails)
   @Column({
     type: DataType.BIGINT,
   })
   bankDetailsId: number;
 
+  @ForeignKey(() => Wallet)
   @Column({
     type: DataType.BIGINT,
   })
@@ -95,6 +99,15 @@ export class GiftCardRate extends Model<GiftCardRate> {
     allowNull: true,
   })
   screenshots: any;
+
+  @BelongsTo(() => User)
+  merchant: User;
+
+  @BelongsTo(() => BankDetails)
+  bankDetails: BankDetails;
+
+  @BelongsTo(() => Wallet)
+  wallet: Wallet;
 
   @Column({
     type: DataType.DATE,

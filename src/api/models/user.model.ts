@@ -1,16 +1,18 @@
 import {
+  BelongsTo,
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   Table,
 } from "sequelize-typescript";
 import { Tier } from "./tier.model";
 import { TransactionProfile } from "./transaction-profile.model";
+import { Role } from "../../enums/enum";
+import { GiftCardRate } from "./gift-card-rate.model";
 
-@Table({
-  tableName: "user",
-})
+@Table
 export class User extends Model<User> {
   @Column({
     type: DataType.BIGINT,
@@ -61,14 +63,14 @@ export class User extends Model<User> {
   phoneNumber: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.ENUM(Role.USER, Role.ADMIN, Role.SUPER_ADMIN),
     allowNull: false,
   })
-  role: string;
+  role: Role;
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
   })
   otp: string;
 
@@ -217,4 +219,9 @@ export class User extends Model<User> {
     defaultValue: DataType.NOW,
   })
   createdAt: Date;
+  @BelongsTo(() => Tier)
+  tier: Tier;
+
+  @HasMany(() => GiftCardRate)
+  giftCardRate: GiftCardRate[];
 }

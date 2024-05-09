@@ -1,4 +1,5 @@
 import {
+  BelongsTo,
   Column,
   DataType,
   ForeignKey,
@@ -55,6 +56,18 @@ export class Chat extends Model<Chat> {
     allowNull: true,
   })
   cryptoCoinId: number;
+
+  @BelongsTo(() => GiftCard)
+  giftCard: GiftCard;
+
+  // @BelongsTo(() => GiftCardTransaction)
+  // giftCardTransaction: GiftCard;
+
+  @BelongsTo(() => User)
+  sender: User;
+
+  @BelongsTo(() => User)
+  receiver: User;
 
   @Column({
     type: DataType.STRING,

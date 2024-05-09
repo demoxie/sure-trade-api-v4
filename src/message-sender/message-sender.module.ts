@@ -1,7 +1,11 @@
-import { Module } from '@nestjs/common';
-import { MessageSenderService } from './message-sender.service';
+import { Module } from "@nestjs/common";
+import { MessageSenderService } from "./message-sender.service";
+import { RabbitmqConfigModule } from "../config/rabbitmq/rabbitmq-config.module";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
-  providers: [MessageSenderService]
+  imports: [RabbitmqConfigModule, ConfigModule],
+  providers: [MessageSenderService],
+  exports: [MessageSenderService],
 })
 export class MessageSenderModule {}

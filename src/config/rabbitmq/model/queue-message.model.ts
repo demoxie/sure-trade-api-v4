@@ -4,8 +4,14 @@ import { SmsMessage } from "./sms.model";
 import { TelegramMessage } from "./telegram-message.model";
 
 export class QueueMessage {
-  email?: EmailModel;
-  notification?: PushyMessage;
-  sms?: SmsMessage;
-  telegram?: TelegramMessage;
+  emailToUser?: EmailModel;
+  emailToMerchant?: EmailModel;
+  emailToAdmin?: EmailModel;
+  notificationToUser?: PushyMessage;
+  notificationMerchant?: PushyMessage;
+  smsToUser?: SmsMessage;
+  smsToMerchant?: SmsMessage;
+  telegramToUser?: TelegramMessage;
+  telegramToMerchant?: TelegramMessage;
+  telegramToAdmin?: TelegramMessage;
 }

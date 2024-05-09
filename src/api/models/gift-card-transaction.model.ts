@@ -1,4 +1,5 @@
 import {
+  BelongsTo,
   Column,
   DataType,
   ForeignKey,
@@ -10,6 +11,13 @@ import { Wallet } from "./wallet.model";
 import { BankDetails } from "./bank-details";
 import { GiftCardRate } from "./gift-card-rate.model";
 import { GiftCard } from "./gift-card.model";
+import {
+  CardIssuer,
+  CardType,
+  PaymentMethod,
+  TransactionStatus,
+  TransactionType,
+} from "../../enums/enum";
 
 @Table
 export class GiftCardTransaction extends Model<GiftCardTransaction> {
@@ -51,25 +59,25 @@ export class GiftCardTransaction extends Model<GiftCardTransaction> {
   merchantId: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.ENUM(TransactionType.BUY, TransactionType.SELL),
     allowNull: false,
   })
-  transactionType: string;
+  transactionType: TransactionType;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.ENUM(CardType.PHYSICAL, CardType.VIRTUAL),
   })
-  cardType: string;
+  cardType: CardType;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.ENUM(CardIssuer.AMAZON, CardIssuer.OTHER),
   })
-  cardIssuer: string;
+  cardIssuer: CardIssuer;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.ENUM(PaymentMethod.PAYPAL, PaymentMethod.BANK_TRANSFER),
   })
-  paymentMethod: string;
+  paymentMethod: PaymentMethod;
 
   @ForeignKey(() => BankDetails)
   @Column({
@@ -84,6 +92,24 @@ export class GiftCardTransaction extends Model<GiftCardTransaction> {
     allowNull: true,
   })
   walletAddressId: number;
+
+  @BelongsTo(() => BankDetails)
+  bankDetails: BankDetails;
+
+  @BelongsTo(() => User, { foreignKey: "merchantId", as: "merchant" })
+  merchant: User;
+
+  @BelongsTo(() => User, { foreignKey: "userId", as: "user" })
+  user: User;
+
+  @BelongsTo(() => GiftCardRate)
+  giftCardRate: GiftCardRate;
+
+  @BelongsTo(() => Wallet)
+  wallet: Wallet;
+
+  @BelongsTo(() => GiftCard)
+  giftCard: GiftCard;
 
   @Column({
     type: DataType.DECIMAL(10, 2),
@@ -116,10 +142,14 @@ export class GiftCardTransaction extends Model<GiftCardTransaction> {
   referenceNo: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.ENUM(
+      TransactionStatus.NEW,
+      TransactionStatus.COMPLETED,
+      TransactionStatus.COMPLETED,
+    ),
     allowNull: false,
   })
-  status: string;
+  status: TransactionStatus;
 
   @Column({
     type: DataType.DATE,
