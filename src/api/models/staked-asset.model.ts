@@ -6,6 +6,7 @@ import {
   Table,
 } from "sequelize-typescript";
 import { User } from "./user.model";
+import { StakedAssetStatus } from "../../enums/enum";
 
 @Table
 export class StakedAsset extends Model<StakedAsset> {
@@ -72,10 +73,14 @@ export class StakedAsset extends Model<StakedAsset> {
   previousBalance: number;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.ENUM(
+      StakedAssetStatus.NEW,
+      StakedAssetStatus.FREEZED,
+      StakedAssetStatus.LOW_BALANCE,
+    ),
     allowNull: false,
   })
-  status: string;
+  status: StakedAssetStatus;
 
   @Column({
     type: DataType.DATE,

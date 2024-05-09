@@ -1,5 +1,6 @@
 import { User } from "./user.model";
 import {
+  BelongsTo,
   Column,
   DataType,
   ForeignKey,
@@ -7,9 +8,7 @@ import {
   Table,
 } from "sequelize-typescript";
 
-@Table({
-  tableName: "bank_details",
-})
+@Table
 export class BankDetails extends Model<BankDetails> {
   @Column({
     type: DataType.BIGINT,
@@ -67,6 +66,9 @@ export class BankDetails extends Model<BankDetails> {
     allowNull: false,
   })
   userId: number;
+
+  @BelongsTo(() => User)
+  user: User;
 
   @Column({
     type: DataType.DATE,

@@ -6,6 +6,7 @@ import {
   Table,
 } from "sequelize-typescript";
 import { User } from "./user.model";
+import { BecomeAMerchantRequestStatus } from "../../enums/enum";
 
 @Table
 export class BecomeMerchantRequests extends Model<BecomeMerchantRequests> {
@@ -76,9 +77,13 @@ export class BecomeMerchantRequests extends Model<BecomeMerchantRequests> {
   country: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.ENUM(
+      BecomeAMerchantRequestStatus.APPROVED,
+      BecomeAMerchantRequestStatus.PROCESSING,
+      BecomeAMerchantRequestStatus.DISAPPROVED,
+    ),
   })
-  status: string;
+  status: BecomeAMerchantRequestStatus;
 
   @Column({
     type: DataType.DATE,
