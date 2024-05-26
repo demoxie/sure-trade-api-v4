@@ -17,6 +17,8 @@ import { ChatModule } from "./chat/chat.module";
 import { AdminModule } from './admin/admin.module';
 import { StakedAssetModule } from './staked-asset/staked-asset.module';
 import { SocialsModule } from './socials/socials.module';
+import { AdvertModule } from './advert/advert.module';
+import { NewsModule } from './news/news.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { SocialsModule } from './socials/socials.module';
     AdminModule,
     StakedAssetModule,
     SocialsModule,
+    AdvertModule,
+    NewsModule,
     // MinioModule,
   ],
   controllers: [],
