@@ -1,0 +1,34 @@
+import { RabbitmqProducer } from "../../config/rabbitmq/service/rabbitmq-producer";
+import Redis from "ioredis";
+import { ConfigService } from "@nestjs/config";
+import { UtilService } from "../../util/util.service";
+import { BecomeMerchantRequestDTO, JwtPayload, ProfilePictureUpdateDTO, RegisterTelegramDTO, RequestIdentityDTO, UpdateDTO, UserResponse } from "../../dto";
+import { MessageSenderService } from "../../message-sender/message-sender.service";
+import { User } from "../../models/user.model";
+import { BecomeMerchantRequests } from "../../models/become-a-merchant-request.model";
+export declare class UserService {
+    private readonly rabbitmq;
+    private readonly redis;
+    private readonly configService;
+    private readonly utilService;
+    private userRepository;
+    private becomeMerchantRequest;
+    private readonly messageSender;
+    constructor(rabbitmq: RabbitmqProducer, redis: Redis, configService: ConfigService, utilService: UtilService, userRepository: typeof User, becomeMerchantRequest: typeof BecomeMerchantRequests, messageSender: MessageSenderService);
+    getUserByEmail: (userEmail: string) => Promise<User>;
+    updateUser(id: number, user: UpdateDTO): Promise<UserResponse>;
+    getLoggedInUserProfile: (email: string) => Promise<User>;
+    getAllUsers: () => Promise<UserResponse[]>;
+    getUserById: (id: number) => Promise<UserResponse>;
+    forgotPassword: (email: string, requestIdentity: RequestIdentityDTO) => Promise<UserResponse>;
+    getMerchants: () => Promise<User[]>;
+    getMerchantsByRate: (cardName: string, currency: string, transactionType: string, giftCardCurrency: string) => Promise<User[]>;
+    getActiveMerchants: () => Promise<User[]>;
+    deleteUser: (id: number) => Promise<string>;
+    logout: (jwtUser: JwtPayload) => Promise<string>;
+    uploadProfileImage(jwtUser: JwtPayload, body: ProfilePictureUpdateDTO): Promise<UserResponse>;
+    requestToBecomeMerchant(jwtUser: JwtPayload, body: BecomeMerchantRequestDTO): Promise<BecomeMerchantRequests>;
+    getActiveAdmin: () => Promise<User>;
+    getAdminAddressToPay: () => Promise<string>;
+    registerTelegram(body: RegisterTelegramDTO): string;
+}
