@@ -1,0 +1,34 @@
+import { User } from "../models/user.model";
+import { RabbitmqProducer } from "../../config/rabbitmq/service/rabbitmq-producer";
+import Redis from "ioredis";
+import { ConfigService } from "@nestjs/config";
+import { UtilService } from "../../util/util.service";
+import { BecomeMerchantRequestDTO, JwtPayload, ProfilePictureUpdateDTO, RegisterTelegramDTO, UpdateDTO } from "../dto";
+import { MessageSenderService } from "../../message-sender/message-sender.service";
+import { BecomeMerchantRequests } from "../models/become-a-merchant-request.model";
+export declare class UserService {
+    private readonly rabbitmq;
+    private readonly redis;
+    private readonly configService;
+    private readonly utilService;
+    private userRepository;
+    private becomeMerchantRequest;
+    private readonly messageSender;
+    constructor(rabbitmq: RabbitmqProducer, redis: Redis, configService: ConfigService, utilService: UtilService, userRepository: typeof User, becomeMerchantRequest: typeof BecomeMerchantRequests, messageSender: MessageSenderService);
+    getUserByEmail: (userEmail: string) => Promise<any>;
+    updateUser(id: number, user: UpdateDTO): Promise<any>;
+    getLoggedInUserProfile: (email: string) => Promise<any>;
+    getAllUsers: () => Promise<any>;
+    getUserById: (id: number) => Promise<any>;
+    forgotPassword: (email: string, requestIdentity: RequestIdentityDTO) => Promise<UserResponse>;
+    getMerchants: () => Promise<any>;
+    getMerchantsByRate: (cardName: string, currency: string, transactionType: string, giftCardCurrency: string) => Promise<any>;
+    getActiveMerchants: () => Promise<any>;
+    deleteUser: (id: number) => Promise<string>;
+    logout: (jwtUser: JwtPayload) => Promise<string>;
+    uploadProfileImage(jwtUser: JwtPayload, body: ProfilePictureUpdateDTO): Promise<UserResponse>;
+    requestToBecomeMerchant(jwtUser: JwtPayload, body: BecomeMerchantRequestDTO): Promise<any>;
+    getActiveAdmin: () => Promise<any>;
+    getAdminAddressToPay: () => Promise<any>;
+    registerTelegram(body: RegisterTelegramDTO): string;
+}

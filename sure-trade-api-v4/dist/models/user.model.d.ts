@@ -1,0 +1,38 @@
+import { Model } from "sequelize-typescript";
+import { Tier } from "./tier.model";
+import { GiftCardRate } from "./gift-card-rate.model";
+import { Role } from "../enums/enum";
+export declare class User extends Model<User> {
+    id?: number;
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    username: string;
+    phoneNumber: string;
+    role: Role;
+    otp: string;
+    isVerified: boolean;
+    isActive: boolean;
+    isSuspended: boolean;
+    middleName?: string;
+    token?: string;
+    transactionPin?: string;
+    walletAddress?: string;
+    nonce?: string;
+    telegram?: string;
+    profilePicture?: string;
+    address?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    gender?: string;
+    tierId?: number;
+    transactionProfileId?: number;
+    referralCodes?: any;
+    telegramChatId?: string;
+    updatedAt?: Date;
+    createdAt: Date;
+    tier: Tier;
+    giftCardRate: GiftCardRate[];
+}

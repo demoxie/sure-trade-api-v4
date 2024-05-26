@@ -1,0 +1,34 @@
+import { Model } from "sequelize-typescript";
+import { User } from "./user.model";
+import { Wallet } from "./wallet.model";
+import { BankDetails } from "./bank-details";
+import { GiftCardRate } from "./gift-card-rate.model";
+import { GiftCard } from "./gift-card.model";
+import { CardIssuer, CardType, PaymentMethod, TransactionStatus, TransactionType } from "../enums/enum";
+export declare class GiftCardTransaction extends Model<GiftCardTransaction> {
+    id: number;
+    giftCardId: number;
+    giftCardRateId: number;
+    userId: number;
+    merchantId: number;
+    transactionType: TransactionType;
+    cardType: CardType;
+    cardIssuer: CardIssuer;
+    paymentMethod: PaymentMethod;
+    bankDetailsId: number;
+    walletAddressId: number;
+    bankDetails: BankDetails;
+    merchant: User;
+    user: User;
+    giftCardRate: GiftCardRate;
+    wallet: Wallet;
+    giftCard: GiftCard;
+    amount: number;
+    quantity: number;
+    fee: number;
+    currency: string;
+    referenceNo: string;
+    status: TransactionStatus;
+    createdAt: Date;
+    updatedAt: Date;
+}
