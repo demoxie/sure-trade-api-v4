@@ -1,0 +1,41 @@
+import { GiftCardTransaction } from "../models/gift-card-transaction.model";
+import { User } from "../models/user.model";
+import { MessageSenderService } from "../message-sender/message-sender.service";
+import { JwtPayload, SignupDTO } from "../dto";
+import { Role } from "../enums/enum";
+import { StakedAsset } from "../models/staked-asset.model";
+import { UserService } from "../user/service/user.service";
+import { JwtService } from "@nestjs/jwt";
+import { ConfigService } from "@nestjs/config";
+import { Tier } from "../models/tier.model";
+export declare class AdminService {
+    private readonly emailSender;
+    private readonly userService;
+    private readonly jwt;
+    private readonly configService;
+    constructor(emailSender: MessageSenderService, userService: UserService, jwt: JwtService, configService: ConfigService);
+    getAllTransactions: (pageNumber: number, limit: number, sortBy: string, sortDirection: string) => Promise<GiftCardTransaction[]>;
+    getTransactionsByParams: (params: any) => Promise<GiftCardTransaction[]>;
+    getTransactionById: (id: number) => Promise<GiftCardTransaction>;
+    getAllAdmins: () => Promise<User[]>;
+    getAdminById: (id: number) => Promise<User>;
+    createAdmin: (admin: SignupDTO) => Promise<void>;
+    updateAdminById: (id: any, admin: SignupDTO) => Promise<User>;
+    assignRole: (id: number, role: Role) => Promise<[affectedCount: number]>;
+    suspendUser: (id: number) => Promise<[affectedCount: number]>;
+    deleteAdminById: (id: number) => Promise<number>;
+    login: (email: string, password: string) => Promise<User>;
+    logout: (token: string) => Promise<User>;
+    logoutAll: () => Promise<void>;
+    forgotPassword: (email: string) => Promise<string>;
+    getAllMerchants: () => Promise<User[]>;
+    getAllActiveMerchants: () => Promise<User[]>;
+    approveRequestToBecomeMerchant(id: number, jwtUser: JwtPayload): Promise<StakedAsset>;
+    getUserByUserId(userId: number): Promise<User>;
+    getTierByAmount: (amount: number) => Promise<Tier>;
+    formatRangeToMinAndMax: (range: any) => {
+        minAmount: number;
+        maxAmount: number;
+    };
+    suspendAdminById: (id: number) => Promise<[affectedCount: number]>;
+}

@@ -1,0 +1,190 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.GiftCardTransaction = void 0;
+const sequelize_typescript_1 = require("sequelize-typescript");
+const user_model_1 = require("./user.model");
+const wallet_model_1 = require("./wallet.model");
+const bank_details_1 = require("./bank-details");
+const gift_card_rate_model_1 = require("./gift-card-rate.model");
+const gift_card_model_1 = require("./gift-card.model");
+const enum_1 = require("../enums/enum");
+let GiftCardTransaction = class GiftCardTransaction extends sequelize_typescript_1.Model {
+};
+exports.GiftCardTransaction = GiftCardTransaction;
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.BIGINT,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+        unique: true,
+    }),
+    __metadata("design:type", Number)
+], GiftCardTransaction.prototype, "id", void 0);
+__decorate([
+    (0, sequelize_typescript_1.ForeignKey)(() => gift_card_model_1.GiftCard),
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.BIGINT,
+        allowNull: false,
+    }),
+    __metadata("design:type", Number)
+], GiftCardTransaction.prototype, "giftCardId", void 0);
+__decorate([
+    (0, sequelize_typescript_1.ForeignKey)(() => gift_card_rate_model_1.GiftCardRate),
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.BIGINT,
+        allowNull: true,
+    }),
+    __metadata("design:type", Number)
+], GiftCardTransaction.prototype, "giftCardRateId", void 0);
+__decorate([
+    (0, sequelize_typescript_1.ForeignKey)(() => user_model_1.User),
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.BIGINT,
+        allowNull: true,
+    }),
+    __metadata("design:type", Number)
+], GiftCardTransaction.prototype, "userId", void 0);
+__decorate([
+    (0, sequelize_typescript_1.ForeignKey)(() => user_model_1.User),
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.BIGINT,
+        allowNull: true,
+    }),
+    __metadata("design:type", Number)
+], GiftCardTransaction.prototype, "merchantId", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.ENUM(enum_1.TransactionType.BUY, enum_1.TransactionType.SELL),
+        allowNull: false,
+    }),
+    __metadata("design:type", String)
+], GiftCardTransaction.prototype, "transactionType", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.ENUM(enum_1.CardType.PHYSICAL, enum_1.CardType.VIRTUAL),
+    }),
+    __metadata("design:type", String)
+], GiftCardTransaction.prototype, "cardType", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.ENUM(enum_1.CardIssuer.AMAZON, enum_1.CardIssuer.OTHER),
+    }),
+    __metadata("design:type", String)
+], GiftCardTransaction.prototype, "cardIssuer", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.ENUM(enum_1.PaymentMethod.PAYPAL, enum_1.PaymentMethod.BANK_TRANSFER),
+    }),
+    __metadata("design:type", String)
+], GiftCardTransaction.prototype, "paymentMethod", void 0);
+__decorate([
+    (0, sequelize_typescript_1.ForeignKey)(() => bank_details_1.BankDetails),
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.BIGINT,
+        allowNull: true,
+    }),
+    __metadata("design:type", Number)
+], GiftCardTransaction.prototype, "bankDetailsId", void 0);
+__decorate([
+    (0, sequelize_typescript_1.ForeignKey)(() => wallet_model_1.Wallet),
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.BIGINT,
+        allowNull: true,
+    }),
+    __metadata("design:type", Number)
+], GiftCardTransaction.prototype, "walletAddressId", void 0);
+__decorate([
+    (0, sequelize_typescript_1.BelongsTo)(() => bank_details_1.BankDetails),
+    __metadata("design:type", bank_details_1.BankDetails)
+], GiftCardTransaction.prototype, "bankDetails", void 0);
+__decorate([
+    (0, sequelize_typescript_1.BelongsTo)(() => user_model_1.User, { foreignKey: "merchantId", as: "merchant" }),
+    __metadata("design:type", user_model_1.User)
+], GiftCardTransaction.prototype, "merchant", void 0);
+__decorate([
+    (0, sequelize_typescript_1.BelongsTo)(() => user_model_1.User, { foreignKey: "userId", as: "user" }),
+    __metadata("design:type", user_model_1.User)
+], GiftCardTransaction.prototype, "user", void 0);
+__decorate([
+    (0, sequelize_typescript_1.BelongsTo)(() => gift_card_rate_model_1.GiftCardRate),
+    __metadata("design:type", gift_card_rate_model_1.GiftCardRate)
+], GiftCardTransaction.prototype, "giftCardRate", void 0);
+__decorate([
+    (0, sequelize_typescript_1.BelongsTo)(() => wallet_model_1.Wallet),
+    __metadata("design:type", wallet_model_1.Wallet)
+], GiftCardTransaction.prototype, "wallet", void 0);
+__decorate([
+    (0, sequelize_typescript_1.BelongsTo)(() => gift_card_model_1.GiftCard),
+    __metadata("design:type", gift_card_model_1.GiftCard)
+], GiftCardTransaction.prototype, "giftCard", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.DECIMAL(10, 2),
+        allowNull: false,
+    }),
+    __metadata("design:type", Number)
+], GiftCardTransaction.prototype, "amount", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.INTEGER,
+        allowNull: false,
+    }),
+    __metadata("design:type", Number)
+], GiftCardTransaction.prototype, "quantity", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.DECIMAL(10, 2),
+        allowNull: false,
+    }),
+    __metadata("design:type", Number)
+], GiftCardTransaction.prototype, "fee", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING,
+        allowNull: false,
+    }),
+    __metadata("design:type", String)
+], GiftCardTransaction.prototype, "currency", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING,
+        allowNull: true,
+    }),
+    __metadata("design:type", String)
+], GiftCardTransaction.prototype, "referenceNo", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.ENUM(enum_1.TransactionStatus.NEW, enum_1.TransactionStatus.COMPLETED, enum_1.TransactionStatus.COMPLETED),
+        allowNull: false,
+    }),
+    __metadata("design:type", String)
+], GiftCardTransaction.prototype, "status", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.DATE,
+        allowNull: false,
+        defaultValue: sequelize_typescript_1.DataType.NOW,
+    }),
+    __metadata("design:type", Date)
+], GiftCardTransaction.prototype, "createdAt", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.DATE,
+        allowNull: true,
+    }),
+    __metadata("design:type", Date)
+], GiftCardTransaction.prototype, "updatedAt", void 0);
+exports.GiftCardTransaction = GiftCardTransaction = __decorate([
+    sequelize_typescript_1.Table
+], GiftCardTransaction);
+//# sourceMappingURL=gift-card-transaction.model.js.map

@@ -1,0 +1,37 @@
+import { UserService } from "../service/user.service";
+import { BecomeMerchantRequestDTO, JwtPayload, LoginDto, PasswordResetDTO, ProfilePictureUpdateDTO, RegisterTelegramDTO, SignupDTO, TransactionPinDTO, UpdateDTO, UserResponse, VerifyOtpDTO } from "../../dto";
+import { Request } from "express";
+import { AuthService } from "../../auth/service/auth.service";
+import { GiftCardTransactionService } from "../../gift-card/gift-card-trsanction/gift-card-transaction.service";
+import { GiftCardRateService } from "../../gift-card/gift-card-rate/gift-card-rate.service";
+import { GiftCardRate } from "../../models/gift-card-rate.model";
+import { BecomeMerchantRequests } from "../../models/become-a-merchant-request.model";
+export declare class UserController {
+    private readonly userService;
+    private readonly authService;
+    private readonly transactionService;
+    private readonly giftCardRateService;
+    constructor(userService: UserService, authService: AuthService, transactionService: GiftCardTransactionService, giftCardRateService: GiftCardRateService);
+    static getJwtUser: (req: Request) => JwtPayload;
+    getAllUsers(): Promise<UserResponse[]>;
+    getUserById(id: number): Promise<UserResponse>;
+    getLoggedInUserProfile(request: Request): Promise<import("../../models/user.model").User>;
+    forgotPassword(email: string, req: Request): Promise<UserResponse>;
+    resetPassword(otp: string, body: PasswordResetDTO): Promise<UserResponse>;
+    getMerchants(): Promise<import("../../models/user.model").User[]>;
+    getMerchantsByRate(cardName: string, currency: string, transactionType: string, giftCardCurrency: string): Promise<import("../../models/user.model").User[]>;
+    getMerchantRates(merchantId: number): Promise<GiftCardRate[]>;
+    getActiveMerchants(): Promise<import("../../models/user.model").User[]>;
+    createUser(body: SignupDTO): Promise<import("../../models/user.model").User>;
+    setupTransactionPin(body: TransactionPinDTO, req: Request): Promise<UserResponse>;
+    confirmTransactionPin(pin: string, req: Request): Promise<UserResponse>;
+    updateUser(id: number, body: UpdateDTO): Promise<UserResponse>;
+    deleteUser(id: number): Promise<string>;
+    login(body: LoginDto, req: Request): Promise<import("../../models/user.model").User>;
+    logout(req: Request): Promise<string>;
+    verifyOtp(body: VerifyOtpDTO): Promise<import("../../dto").OtpVerificationResponse>;
+    uploadProfileImage(body: ProfilePictureUpdateDTO, req: Request): Promise<UserResponse>;
+    requestToBecomeMerchant(body: BecomeMerchantRequestDTO, req: Request): Promise<BecomeMerchantRequests>;
+    getAdminAddressToPay(): Promise<string>;
+    registerTelegram(body: RegisterTelegramDTO): Promise<string>;
+}
