@@ -1,19 +1,22 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { GiftCard } from "../../api/models/gift-card.model";
 import {
-  GiftCardDTO,
+  GiftCardDTO, GiftCardVO,
   JwtPayload,
-  SearchGiftCardQueryParams,
-} from "../../api/dto";
+  SearchGiftCardQueryParams, SupportedGiftCard,
+} from "../../dto";
 import { DatabaseError } from "sequelize";
 import { supportedGiftCards } from "../../constants/gift-cards";
+import {CardStatus} from "../../enums/enum";
+import {ModelMapper} from "../../util/modelmapper/modelmapper.service";
+import {Model} from "sequelize-typescript";
+import {object} from "joi";
+import {GiftCard} from "../../models/gift-card.model";
 
 @Injectable()
 export class GiftCardService {
   getGiftCards = async () =>
     await GiftCard.findAll({ include: { all: true } })
       .then((res) => {
-        console.log("Resulting----");
         return res.map((g) => g.toJSON());
       })
       .catch((err) => {
@@ -21,7 +24,7 @@ export class GiftCardService {
       });
 
   async getAllMyGiftCards(jwtUser: JwtPayload) {
-    return await GiftCard.findAll({
+    const myGIftCards =  await GiftCard.findAll({
       where: {
         userId: jwtUser.id,
       },
@@ -31,6 +34,9 @@ export class GiftCardService {
       .catch((err) => {
         throw new HttpException(err.message, HttpStatus.INTERNAL_SERVER_ERROR);
       });
+    console.log("Gift Cards found", myGIftCards);
+    const mapper = new ModelMapper<GiftCard, GiftCardVO>();
+    return myGIftCards.map((g: GiftCard)=>mapper.map(g));
   }
 
   async getGiftCardById(id: number) {
@@ -78,14 +84,14 @@ export class GiftCardService {
   }
 
   async createGiftCard(body: GiftCardDTO, jwtUser: JwtPayload) {
-    body.status = "NEW";
+    body.status = CardStatus.NEW;
     body.userId = jwtUser.id;
     const giftCard = {
       ...body,
       expiryDate: new Date(body.expiryDate),
       createdAt: new Date(),
       updatedAt: new Date(),
-      status: "NEW",
+      status: CardStatus.NEW,
     };
     return await GiftCard.create(giftCard)
       .then((result) => {
@@ -172,7 +178,8 @@ export class GiftCardService {
   }
 
   getSupportedGiftCards() {
-    return supportedGiftCards;
+    const mapper = new ModelMapper<object,SupportedGiftCard>();
+    return supportedGiftCards.map((o)=>mapper.map(SupportedGiftCard));
   }
 
   async updateMyGiftCardById(
@@ -210,15 +217,13 @@ export class GiftCardService {
     });
   }
 
-  searchGiftCards(searchParams: SearchGiftCardQueryParams) {
-    return supportedGiftCards.filter((card) => {
-      const nameMatch = searchParams.name
+  searchGiftCards = async (searchParams: SearchGiftCardQueryParams) => supportedGiftCards.filter((card) => {
+    const nameMatch = searchParams.name
         ? card.name.toLowerCase().includes(searchParams.name.toLowerCase())
         : true;
-      const currencyMatch = searchParams.currency
+    const currencyMatch = searchParams.currency
         ? card.currency.includes(searchParams.currency.toUpperCase())
         : true;
-      return nameMatch && currencyMatch;
-    });
-  }
+    return nameMatch && currencyMatch;
+  });
 }

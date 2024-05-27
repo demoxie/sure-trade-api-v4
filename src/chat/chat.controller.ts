@@ -23,9 +23,9 @@ import { AuthGuard, Roles } from "../auth/service/auth.guard";
 import { ChatService } from "./chat.service";
 import { Role } from "../enums/enum";
 import { RolesGuard } from "../auth/service/role.guard";
-import { ChatDTO, ChatResponse } from "../api/dto";
+import { ChatDTO, ChatResponse } from "../dto";
 import { Request } from "express";
-import { UserController } from "../api/controller/user.controller";
+import { UserController } from "../user/controller/user.controller";
 
 @Controller("/chat")
 @ApiTags("Chat Controller")

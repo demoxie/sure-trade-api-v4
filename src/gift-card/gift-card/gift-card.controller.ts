@@ -22,14 +22,14 @@ import {
 } from "@nestjs/swagger";
 import {
   GiftCardDTO,
-  GiftCardResponse,
-  SearchGiftCardQueryParams,
-} from "../../api/dto";
+  GiftCardResponse, GiftCardsResponse,
+  SearchGiftCardQueryParams, SupportedGiftCard,
+} from "../../dto";
 import { RolesGuard } from "../../auth/service/role.guard";
 import { Role } from "../../enums/enum";
 import { GiftCardService } from "./gift-card.service";
 import { Request } from "express";
-import { UserController } from "../../api/controller/user.controller";
+import { UserController } from "../../user/controller/user.controller";
 import { HttpExceptionFilter } from "../../exception/HttpExceptionFilter";
 
 @Controller("/gift-card")
@@ -48,9 +48,12 @@ export class GiftCardController {
     summary: "Get All Gift Cards",
     description: "Get All Gift Cards",
   })
-  @ApiResponse({ type: [GiftCardResponse] })
+  @ApiResponse({ type: GiftCardsResponse })
   async getGiftCards() {
-    return await this.giftCardService.getGiftCards();
+    return {
+      data: await this.giftCardService.getGiftCards(),
+      message: "Success"
+    }
   }
 
   @Get("/mine")
@@ -61,11 +64,15 @@ export class GiftCardController {
     summary: "Get All My Gift Cards",
     description: "Get All My Gift Cards",
   })
-  @ApiResponse({ type: [GiftCardResponse] })
-  async getAllMyGiftCards(@Req() req: Request) {
-    return this.giftCardService.getAllMyGiftCards(
+  @ApiResponse({ type: GiftCardsResponse,description: 'List of Gift Cards' })
+  async getAllMyGiftCards(@Req() req: Request): Promise<GiftCardsResponse> {
+    const giftCards =  await this.giftCardService.getAllMyGiftCards(
       UserController.getJwtUser(req),
     );
+    return {
+      data: giftCards,
+      message: "Success"
+    }
   }
 
   @Get("/:id")
@@ -78,7 +85,10 @@ export class GiftCardController {
   })
   @ApiResponse({ type: GiftCardResponse })
   async getGiftCardById(@Param("id") id: number) {
-    return this.giftCardService.getGiftCardById(id);
+    return {
+      data: await this.giftCardService.getGiftCardById(id),
+      message: "Success"
+    }
   }
 
   @Get("/search/:cardCode")
@@ -89,9 +99,12 @@ export class GiftCardController {
     summary: "Search Gift Cards By Card Code",
     description: "Search Gift Cards By Card Code",
   })
-  @ApiResponse({ type: [GiftCardResponse] })
+  @ApiResponse({ type: GiftCardResponse })
   async getGiftCardByCardCode(@Param("cardCode") cardCode: string) {
-    return this.giftCardService.getGiftCardByCardCode(cardCode);
+    return {
+      data: await this.giftCardService.getGiftCardByCardCode(cardCode),
+      message: "Success"
+    }
   }
 
   @Get("/user/:userId")
@@ -102,9 +115,12 @@ export class GiftCardController {
     summary: "Get Gift Cards By User Id",
     description: "Get Gift Cards By User Id",
   })
-  @ApiResponse({ type: [GiftCardResponse] })
+  @ApiResponse({ type: GiftCardsResponse })
   async getGiftCardsByUserId(@Param("userId") userId: number) {
-    return this.giftCardService.getGiftCardsByUserId(userId);
+    return {
+      data: await this.giftCardService.getGiftCardsByUserId(userId),
+      message: "Success"
+    }
   }
 
   @Get("/user/:status")
@@ -115,9 +131,12 @@ export class GiftCardController {
     summary: "Get Gift Cards By Status",
     description: "Get Gift Cards By Status",
   })
-  @ApiResponse({ type: [GiftCardResponse] })
+  @ApiResponse({ type: GiftCardsResponse })
   async getGiftCardsByStatus(@Param("status") status: string) {
-    return this.giftCardService.getGiftCardByStatus(status);
+    return {
+      data: await this.giftCardService.getGiftCardByStatus(status),
+      message: "Success"
+    }
   }
 
   @Get("/status/:status")
@@ -128,9 +147,12 @@ export class GiftCardController {
     summary: "Get Gift Cards By Status",
     description: "Get Gift Cards By Status",
   })
-  @ApiResponse({ type: [GiftCardResponse] })
+  @ApiResponse({ type: GiftCardResponse })
   async getGiftCardByStatus(@Param("status") status: string) {
-    return this.giftCardService.getGiftCardByStatus(status);
+    return {
+      data: this.giftCardService.getGiftCardByStatus(status),
+      message: "Success"
+    }
   }
 
   @Get("/type/:type")
@@ -141,9 +163,12 @@ export class GiftCardController {
     summary: "Get Gift Cards By Type",
     description: "Get Gift Cards By Type",
   })
-  @ApiResponse({ type: [GiftCardResponse] })
+  @ApiResponse({ type: GiftCardsResponse })
   async getGiftCardsByType(@Param("type") type: string) {
-    return this.giftCardService.getGiftCardsByType(type);
+    return {
+      data: await this.giftCardService.getGiftCardsByType(type),
+      message: "Success"
+    }
   }
 
   @Post()
@@ -156,10 +181,13 @@ export class GiftCardController {
   })
   @ApiResponse({ type: GiftCardResponse })
   async createGiftCard(@Body() body: GiftCardDTO, @Req() req: Request) {
-    return this.giftCardService.createGiftCard(
-      body,
-      UserController.getJwtUser(req),
-    );
+    return {
+      data: await this.giftCardService.createGiftCard(
+          body,
+          UserController.getJwtUser(req),
+      ),
+      message: "Success"
+    }
   }
 
   @Get("/params/search")
@@ -168,9 +196,12 @@ export class GiftCardController {
     summary: "Search Gift Cards By Parameters",
     description: "Search Gift Cards By Parameters",
   })
-  @ApiResponse({ type: [GiftCardResponse] })
+  @ApiResponse({ type: GiftCardsResponse })
   async searchGiftCards(@Query() query: SearchGiftCardQueryParams) {
-    return this.giftCardService.searchGiftCards(query);
+    return {
+      data: await this.giftCardService.searchGiftCards(query),
+      message: "Success"
+    }
   }
 
   @Put("/:id")
@@ -183,7 +214,10 @@ export class GiftCardController {
   })
   @ApiResponse({ type: GiftCardResponse })
   async updateGiftCardById(@Param("id") id: number, @Body() body: GiftCardDTO) {
-    return this.giftCardService.updateGiftCardById(id, body);
+    return {
+      data: await this.giftCardService.updateGiftCardById(id, body),
+      message: "Success"
+    }
   }
 
   @Put("/mine/:id")
@@ -200,11 +234,14 @@ export class GiftCardController {
     @Body() body: GiftCardDTO,
     @Req() req: Request,
   ) {
-    return this.giftCardService.updateMyGiftCardById(
-      id,
-      UserController.getJwtUser(req),
-      body,
-    );
+    return {
+      data: await this.giftCardService.updateMyGiftCardById(
+          id,
+          UserController.getJwtUser(req),
+          body,
+      ),
+      message: "Success"
+    }
   }
 
   @Put("/:id/screenshots")
@@ -220,7 +257,10 @@ export class GiftCardController {
     @Param("id") id: number,
     @Body() body: GiftCardDTO,
   ) {
-    return this.giftCardService.uploadGiftCardScreenshots(id, body);
+    return {
+      data: this.giftCardService.uploadGiftCardScreenshots(id, body),
+      message: "Success"
+    }
   }
 
   @Delete("/:id")
@@ -233,7 +273,10 @@ export class GiftCardController {
   })
   @ApiResponse({ type: GiftCardResponse })
   async deleteGiftCard(@Param("id") id: number) {
-    return this.giftCardService.deleteGiftCard(id);
+    return {
+      data: await this.giftCardService.deleteGiftCard(id),
+      message: "Success"
+    }
   }
 
   @Get("/supported/gift-cards")
@@ -242,8 +285,11 @@ export class GiftCardController {
     summary: "Get Supported Gift Cards",
     description: "Get Supported Gift Cards",
   })
-  @ApiResponse({ type: [GiftCardResponse] })
+  @ApiResponse({ type: [SupportedGiftCard] })
   async getSupportedGiftCards() {
-    return this.giftCardService.getSupportedGiftCards();
+    return {
+      data: this.giftCardService.getSupportedGiftCards(),
+      message: "Success"
+    }
   }
 }

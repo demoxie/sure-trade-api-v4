@@ -16,16 +16,16 @@ import {
   TransactionPinDTO,
   UserResponse,
   VerifyOtpDTO,
-} from "../../api/dto";
-import { User } from "../../api/models/user.model";
+} from "../../dto";
+import { User } from "../../models/user.model";
 import * as bcrypt from "bcrypt";
-import { Tier } from "../../api/models/tier.model";
+import { Tier } from "../../models/tier.model";
 import { Role } from "../../enums/enum";
 import { RabbitmqProducer } from "../../config/rabbitmq/service/rabbitmq-producer";
 import { InjectRedis } from "@nestjs-modules/ioredis";
 import Redis from "ioredis";
 import { ConfigService } from "@nestjs/config";
-import { UserService } from "../../api/service/user.service";
+import { UserService } from "../../user/service/user.service";
 import { MessageSenderService } from "../../message-sender/message-sender.service";
 import { UtilService } from "../../util/util.service";
 import { ModelMapper } from "../../util/modelmapper/modelmapper.service";

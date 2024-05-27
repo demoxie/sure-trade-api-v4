@@ -1,18 +1,18 @@
 import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
-import { GiftCardRate } from "../../api/models/gift-card-rate.model";
-import { GiftCardTransaction } from "../../api/models/gift-card-transaction.model";
+import { GiftCardRate } from "../../models/gift-card-rate.model";
+import { GiftCardTransaction } from "../../models/gift-card-transaction.model";
 import {
   AcceptRejectTransactionDTO,
   GiftCardTransactionDTO,
   JwtPayload,
   PageRequest,
-} from "../../api/dto";
+} from "../../dto";
 import { Role, TransactionStatus, TransactionType } from "../../enums/enum";
 import { DatabaseError, Op } from "sequelize";
 import { ConfigService } from "@nestjs/config";
 import { UtilService } from "../../util/util.service";
-import { User } from "../../api/models/user.model";
-import { GiftCard } from "../../api/models/gift-card.model";
+import { User } from "../../models/user.model";
+import { GiftCard } from "../../models/gift-card.model";
 import { MessageSenderService } from "../../message-sender/message-sender.service";
 
 @Injectable()

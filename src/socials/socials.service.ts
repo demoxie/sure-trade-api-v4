@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { RegisterTelegramDTO } from "../api/dto";
-import { User } from "../api/models/user.model";
+import { RegisterTelegramDTO } from "../dto";
+import {User} from "../models/user.model";
 
 @Injectable()
 export class SocialsService {

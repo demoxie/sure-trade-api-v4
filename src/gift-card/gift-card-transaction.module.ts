@@ -8,7 +8,7 @@ import {
   giftCardRateProvider,
   giftCardTransactionProvider,
   userProviders,
-} from "../api/models/repository/model.provider";
+} from "../models/repository/model.provider";
 import { AuthModule } from "../auth/auth.module";
 import { ConfigModules } from "../config/config/configModules";
 import { DatabaseModule } from "../config/database/database.module";

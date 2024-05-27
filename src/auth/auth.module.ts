@@ -5,11 +5,11 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { UtilModule } from "../util/util.module";
 import { MessageSenderModule } from "../message-sender/message-sender.module";
 import { RabbitmqConfigModule } from "../config/rabbitmq/rabbitmq-config.module";
-import { UserService } from "../api/service/user.service";
+import { UserService } from "../user/service/user.service";
 import {
   becomeMerchantRequestProvider,
   userProviders,
-} from "../api/models/repository/model.provider";
+} from "../models/repository/model.provider";
 
 @Module({
   imports: [

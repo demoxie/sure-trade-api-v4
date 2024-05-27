@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { SocialsService } from "./socials.service";
-import { RegisterTelegramDTO } from "../api/dto";
+import { RegisterTelegramDTO } from "../dto";
 import { AuthGuard, Public } from "../auth/service/auth.guard";
 import {
   ApiBearerAuth,

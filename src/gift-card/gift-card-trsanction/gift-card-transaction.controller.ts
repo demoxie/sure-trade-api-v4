@@ -28,11 +28,11 @@ import {
   GiftCardTransactionResponse,
   JwtPayload,
   PageRequest,
-} from "../../api/dto";
+} from "../../dto";
 import { HttpExceptionFilter } from "../../exception/HttpExceptionFilter";
 import { Request } from "express";
-import { UserController } from "../../api/controller/user.controller";
-import { GiftCardTransaction } from "../../api/models/gift-card-transaction.model";
+import { UserController } from "../../user/controller/user.controller";
+import { GiftCardTransaction } from "../../models/gift-card-transaction.model";
 
 @Controller("/gift-card-transaction")
 @ApiTags("Gift Card Transactions Controller")

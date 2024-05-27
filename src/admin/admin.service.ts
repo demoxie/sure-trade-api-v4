@@ -1,21 +1,21 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { GiftCardTransaction } from "../api/models/gift-card-transaction.model";
+import { GiftCardTransaction } from "../models/gift-card-transaction.model";
 import { Op } from "sequelize";
-import { User } from "../api/models/user.model";
-import { BecomeMerchantRequests } from "../api/models/become-a-merchant-request.model";
+import { User } from "../models/user.model";
+import { BecomeMerchantRequests } from "../models/become-a-merchant-request.model";
 import { MessageSenderService } from "../message-sender/message-sender.service";
 import * as bcrypt from "bcrypt";
-import { JwtPayload, SignupDTO } from "../api/dto";
+import { JwtPayload, SignupDTO } from "../dto";
 import {
   BecomeAMerchantRequestStatus,
   Role,
   StakedAssetStatus,
 } from "../enums/enum";
-import { StakedAsset } from "../api/models/staked-asset.model";
-import { UserService } from "../api/service/user.service";
+import { StakedAsset } from "../models/staked-asset.model";
+import { UserService } from "../user/service/user.service";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
-import { Tier } from "../api/models/tier.model";
+import { Tier } from "../models/tier.model";
 
 @Injectable()
 export class AdminService {

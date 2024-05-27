@@ -16,8 +16,8 @@ import {
 } from "@nestjs/swagger";
 import { HttpExceptionFilter } from "../exception/HttpExceptionFilter";
 import { AdminService } from "./admin.service";
-import { BecomeMerchantRequests } from "../api/models/become-a-merchant-request.model";
-import { UserController } from "../api/controller/user.controller";
+import { BecomeMerchantRequests } from "../models/become-a-merchant-request.model";
+import { UserController } from "../user/controller/user.controller";
 import { Request } from "express";
 
 @ApiTags("Admin Controller")

@@ -22,9 +22,9 @@ import {
 import { HttpExceptionFilter } from "../../exception/HttpExceptionFilter";
 import { AuthGuard, Roles } from "../../auth/service/auth.guard";
 import { Role } from "src/enums/enum";
-import { GiftCardRateDTO } from "../../api/dto";
+import { GiftCardRateDTO } from "../../dto";
 import { Request } from "express";
-import { UserController } from "../../api/controller/user.controller";
+import { UserController } from "../../user/controller/user.controller";
 
 @Controller("/gift-card-rate")
 @ApiTags("Gift Card Rate Controller")

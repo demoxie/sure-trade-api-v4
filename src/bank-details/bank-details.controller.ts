@@ -13,9 +13,9 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { BankDetailsService } from "./bank-details.service";
-import { BankDetailsDTO } from "../api/dto";
+import { BankDetailsDTO } from "../dto";
 import { Request } from "express";
-import { UserController } from "../api/controller/user.controller";
+import { UserController } from "../user/controller/user.controller";
 import { RolesGuard } from "../auth/service/role.guard";
 import { AuthGuard, Roles } from "../auth/service/auth.guard";
 import { Role } from "../enums/enum";

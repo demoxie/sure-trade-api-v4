@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { DatabaseModule } from "./config/database/database.module";
 import { AuthModule } from "./auth/auth.module";
 import { ConfigModules } from "./config/config/configModules";
-import { ApiModule } from "./api/api.module";
+import { ApiModule } from "./user/api.module";
 import { RabbitmqConfigModule } from "./config/rabbitmq/rabbitmq-config.module";
 import { UtilModule } from "./util/util.module";
 import { MessageSenderModule } from "./message-sender/message-sender.module";
@@ -10,15 +10,13 @@ import { GiftCardTransactionModule } from "./gift-card/gift-card-transaction.mod
 import { BankDetailsModule } from "./bank-details/bank-details.module";
 import { GiftCardRateModule } from "./gift-card-rate/gift-card-rate.module";
 import { HttpExceptionFilter } from "./exception/HttpExceptionFilter";
-import { APP_FILTER } from "@nestjs/core";
+import {APP_FILTER, APP_INTERCEPTOR} from "@nestjs/core";
 import { ChatModule } from "./chat/chat.module";
 
 // import { MinioModule } from './config/minio/minio/minio.module';
 import { AdminModule } from './admin/admin.module';
 import { StakedAssetModule } from './staked-asset/staked-asset.module';
 import { SocialsModule } from './socials/socials.module';
-import { AdvertModule } from './advert/advert.module';
-import { NewsModule } from './news/news.module';
 
 @Module({
   imports: [
@@ -36,8 +34,6 @@ import { NewsModule } from './news/news.module';
     AdminModule,
     StakedAssetModule,
     SocialsModule,
-    AdvertModule,
-    NewsModule,
     // MinioModule,
   ],
   controllers: [],

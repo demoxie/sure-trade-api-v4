@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { BankDetailsDTO, JwtPayload } from "../api/dto";
-import { BankDetails } from "../api/models/bank-details";
+import { BankDetailsDTO, JwtPayload } from "../dto";
+import { BankDetails } from "../models/bank-details";
 import { MessageSenderService } from "../message-sender/message-sender.service";
-import { User } from "../api/models/user.model";
+import { User } from "../models/user.model";
 
 @Injectable()
 export class BankDetailsService {

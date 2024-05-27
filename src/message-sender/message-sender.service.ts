@@ -1,16 +1,16 @@
 import { Injectable } from "@nestjs/common";
-import { User } from "../api/models/user.model";
 import { EmailModel } from "../config/rabbitmq/model/email.model";
 import { SmsMessage } from "../config/rabbitmq/model/sms.model";
 import { QueueMessage } from "../config/rabbitmq/model/queue-message.model";
 import { ConfigService } from "@nestjs/config";
 import { RabbitmqProducer } from "../config/rabbitmq/service/rabbitmq-producer";
-import { RequestIdentityDTO } from "../api/dto";
-import { BecomeMerchantRequests } from "../api/models/become-a-merchant-request.model";
-import { GiftCardTransaction } from "../api/models/gift-card-transaction.model";
-import { GiftCard } from "../api/models/gift-card.model";
-import { GiftCardRate } from "../api/models/gift-card-rate.model";
-import { BankDetails } from "../api/models/bank-details";
+import { RequestIdentityDTO } from "../dto";
+import {BecomeMerchantRequests} from "../models/become-a-merchant-request.model";
+import {GiftCardTransaction} from "../models/gift-card-transaction.model";
+import {GiftCard} from "../models/gift-card.model";
+import {GiftCardRate} from "../models/gift-card-rate.model";
+import {BankDetails} from "../models/bank-details";
+import {User} from "../models/user.model";
 
 @Injectable()
 export class MessageSenderService {

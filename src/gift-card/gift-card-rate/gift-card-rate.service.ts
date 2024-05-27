@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
-import { GiftCardRate } from "../../api/models/gift-card-rate.model";
-import { User } from "../../api/models/user.model";
-import { GiftCardRateDTO } from "../../api/dto";
+import { GiftCardRate } from "../../models/gift-card-rate.model";
+import { User } from "../../models/user.model";
+import { GiftCardRateDTO } from "../../dto";
 
 @Injectable()
 export class GiftCardRateService {

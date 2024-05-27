@@ -56,3 +56,10 @@ export enum StakedAssetStatus {
   LOW_BALANCE = "LOW_BALANCE",
   FREEZED = "FREEZED",
 }
+
+export enum CardStatus{
+  NEW="NEW",
+  SOLD="SOLD",
+  FLAGGED="FLAGGED",
+  ACTIVE="ACTIVE"
+}

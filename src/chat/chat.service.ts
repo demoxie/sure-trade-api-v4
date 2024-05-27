@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { Chat } from "../api/models/chat.mode";
-import { ChatDTO, JwtPayload } from "../api/dto";
+import { Chat } from "../models/chat.mode";
+import { ChatDTO, JwtPayload } from "../dto";
 
 @Injectable()
 export class ChatService {
